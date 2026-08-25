@@ -4,40 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Core Descent</title>
+    <title>V3 PlayStation — Unsubscribe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Upgraded Dynamic Rendering Engine -->
-    <canvas id="drillCanvas" class="environment-bg"></canvas>
-
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 02</span>
-            <h1>Core Descent</h1>
-            <p class="subtitle">Hold the drill to descend 6,371 km to the center of the Earth.</p>
+            <span class="badge">V3 PlayStation • 03</span>
+            <h1>Unsubscribe</h1>
+            <p class="subtitle">Opt out of the mailing list. It should be simple.</p>
         </header>
 
-        <div class="hud-wrapper">
-            <div class="depth-display">
-                <span id="depthValue" class="depth-number">0.000</span>
-                <span class="depth-unit">km</span>
-            </div>
-
-            <div class="milestone-card" id="milestoneCard">
-                <h3 id="milestoneTitle">Surface Level</h3>
-                <p id="milestoneText">The journey begins.</p>
-            </div>
-
-            <div class="controls">
-                <button id="ascendBtn" class="action-btn secondary">Ascend</button>
-                <button id="drillBtn" class="action-btn primary">Drill Down</button>
-            </div>
+        <div id="gameWindow" class="game-window">
+            <!-- The puzzle logic will be injected here -->
         </div>
     </main>
 
-    <script src="js/descent.js"></script>
+    <script src="js/unsubscribe.js"></script>
 </body>
 
 </html>
