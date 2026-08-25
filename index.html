@@ -4,32 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Draw a Perfect Right-Angled Triangle</title>
+    <title>V3 PlayStation — Core Descent</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Upgraded Dynamic Rendering Engine -->
+    <canvas id="drillCanvas" class="environment-bg"></canvas>
+
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 01</span>
-            <h1>Draw a Right-Angled Triangle</h1>
-            <p class="subtitle">Draw a closed triangle with a single continuous stroke. One angle must be exactly 90°.
-            </p>
+            <span class="badge">V3 PlayStation • 02</span>
+            <h1>Core Descent</h1>
+            <p class="subtitle">Hold the drill to descend 6,371 km to the center of the Earth.</p>
         </header>
 
-        <div class="canvas-wrapper">
-            <canvas id="gameCanvas"></canvas>
-            <div id="scoreOverlay" class="score-overlay hidden">
-                <div class="score-display">
-                    <span id="scoreValue" class="score-number">0.0%</span>
-                    <p id="scoreFeedback" class="score-text">Calculating...</p>
-                </div>
-                <button id="resetBtn" class="action-btn">Try Again</button>
+        <div class="hud-wrapper">
+            <div class="depth-display">
+                <span id="depthValue" class="depth-number">0.000</span>
+                <span class="depth-unit">km</span>
+            </div>
+
+            <div class="milestone-card" id="milestoneCard">
+                <h3 id="milestoneTitle">Surface Level</h3>
+                <p id="milestoneText">The journey begins.</p>
+            </div>
+
+            <div class="controls">
+                <button id="ascendBtn" class="action-btn secondary">Ascend</button>
+                <button id="drillBtn" class="action-btn primary">Drill Down</button>
             </div>
         </div>
     </main>
 
-    <script src="js/triangle.js"></script>
+    <script src="js/descent.js"></script>
 </body>
 
 </html>
