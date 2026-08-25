@@ -4,24 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Unsubscribe</title>
+    <title>V3 PlayStation — Meeting Stats</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 03</span>
-            <h1>Unsubscribe</h1>
-            <p class="subtitle">Opt out of the mailing list. It should be simple.</p>
+            <span class="badge">V3 PlayStation • 04</span>
+            <h1>Meeting Stats</h1>
+            <p class="subtitle">Quantify the hours lost to corporate alignment.</p>
         </header>
 
-        <div id="gameWindow" class="game-window">
-            <!-- The puzzle logic will be injected here -->
+        <div class="calculator-panel">
+            <div class="input-group">
+                <label>Meetings per week</label>
+                <input type="number" id="meetsPerWeek" value="5" min="0" max="100">
+            </div>
+            <div class="input-group">
+                <label>Average duration (minutes)</label>
+                <input type="number" id="duration" value="45" min="1" max="480">
+            </div>
+            <div class="input-group">
+                <label>Years working</label>
+                <input type="number" id="years" value="3" min="0.5" max="50" step="0.5">
+            </div>
+        </div>
+
+        <div class="results-panel">
+            <h2>Total Time Surrendered</h2>
+            <div class="big-stat"><span id="totalHours">0</span> Hours</div>
+            <p id="contextText" class="context-text">Calculating...</p>
         </div>
     </main>
 
-    <script src="js/unsubscribe.js"></script>
+    <script src="js/meeting.js"></script>
 </body>
 
 </html>

@@ -16,10 +16,10 @@ body {
 }
 
 .game-container {
-    text-align: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     padding: 20px;
+    text-align: center;
 }
 
 .badge {
@@ -28,8 +28,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 700;
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.15);
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.15);
     padding: 4px 10px;
     border-radius: 999px;
     margin-bottom: 12px;
@@ -38,100 +38,88 @@ body {
 h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    color: #ffffff;
     margin-bottom: 8px;
 }
 
 .subtitle {
-    font-size: 1rem;
     color: #94a3b8;
     margin-bottom: 30px;
 }
 
-.game-window {
-    background: #ffffff;
-    color: #1e293b;
+.calculator-panel {
+    background: #1e293b;
+    padding: 24px;
     border-radius: 12px;
-    padding: 40px;
-    min-height: 380px;
-    position: relative;
+    margin-bottom: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+    text-align: left;
 }
 
-.btn {
-    padding: 12px 24px;
-    border: none;
+.input-group label {
+    color: #cbd5e1;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.input-group input {
+    width: 90px;
+    padding: 10px;
     border-radius: 6px;
+    border: 1px solid #334155;
+    background: #0f1117;
+    color: #ffffff;
     font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.15s;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
-.btn-primary {
-    background: #334155;
-    color: #ffffff;
-    margin-bottom: 16px;
+.input-group input:focus {
+    border-color: #a855f7;
 }
 
-.btn-primary:hover {
-    background: #475569;
+.results-panel {
+    background: #ffffff;
+    color: #0f172a;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease;
 }
 
-.btn-danger {
-    background: #ef4444;
-    color: #ffffff;
+.results-panel:hover {
+    transform: translateY(-2px);
 }
 
-.btn-danger:hover {
-    background: #f87171;
+.results-panel h2 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    margin-bottom: 12px;
 }
 
-/* Prevents focus outline from giving away the keyboard trick too easily */
-.btn-danger:focus {
-    outline: 2px solid #ef4444;
-    outline-offset: 4px;
+.big-stat {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #a855f7;
+    letter-spacing: -1.5px;
+    margin-bottom: 12px;
 }
 
-.hidden {
-    display: none !important;
-}
-
-.hint-text {
-    position: absolute;
-    bottom: 20px;
-    font-size: 0.85rem;
-    color: #94a3b8;
-    opacity: 0;
-    transition: opacity 1s ease-in;
-}
-
-.slider-container {
-    width: 100%;
-    max-width: 300px;
-    margin: 24px 0;
-}
-
-input[type=range] {
-    width: 100%;
-    cursor: pointer;
-}
-
-.matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 40px);
-    gap: 12px;
-    margin: 24px 0;
-}
-
-.matrix-grid input[type=checkbox] {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    accent-color: #ef4444;
+.context-text {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.5;
+    padding: 0 10px;
 }
