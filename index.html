@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Draw a Perfect Right-Angled Triangle</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 01</span>
+            <h1>Draw a Right-Angled Triangle</h1>
+            <p class="subtitle">Draw a closed triangle with a single continuous stroke. One angle must be exactly 90°.
+            </p>
+        </header>
+
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas"></canvas>
+            <div id="scoreOverlay" class="score-overlay hidden">
+                <div class="score-display">
+                    <span id="scoreValue" class="score-number">0.0%</span>
+                    <p id="scoreFeedback" class="score-text">Calculating...</p>
+                </div>
+                <button id="resetBtn" class="action-btn">Try Again</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/triangle.js"></script>
+</body>
+
+</html>
