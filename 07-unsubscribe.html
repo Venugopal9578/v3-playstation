@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Unsubscribe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        #gameWindow {
+            background: #000000;
+            border-radius: 8px;
+            padding: 40px 20px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .hint-text {
+            margin-top: 40px;
+            color: #334155;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .slider-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 200px;
+        }
+
+        .matrix-grid input {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 07</span>
+            <h1>Unsubscribe</h1>
+            <p class="subtitle">Evade the digital persistence.</p>
+        </header>
+        <div class="canvas-card">
+
+            <div id="gameWindow"></div>
+
+            <div class="controls-bar" style="margin-top: 16px;">
+                <a href="index.html" class="action-btn-small" style="text-decoration: none;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/unsubscribe.js"></script>
+</body>
+
+</html>

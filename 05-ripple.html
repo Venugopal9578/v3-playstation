@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Ripple</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        #rippleGrid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 4px;
+            padding: 20px;
+            background: #000000;
+            border-radius: 8px;
+        }
+
+        .tile {
+            aspect-ratio: 1;
+            background: #1e293b;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tile.active {
+            background: hsl(var(--wave-hue, 200), 100%, 60%);
+            transform: scale(1.25);
+            box-shadow: 0 0 15px hsl(var(--wave-hue, 200), 100%, 50%);
+            z-index: 10;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 05</span>
+            <h1>Ripple</h1>
+            <p class="subtitle">Fluid kinetic wave propagation.</p>
+        </header>
+        <div class="canvas-card">
+
+            <!-- Top Action Bar aligned to match Game 1 -->
+            <div
+                style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 16px; padding: 0 4px;">
+                <button id="soundToggleBtn" class="action-btn-small">Sound: OFF</button>
+            </div>
+
+            <div id="rippleGrid"></div>
+
+            <div class="controls-bar" style="margin-top: 16px;">
+                <a href="index.html" class="action-btn-small" style="text-decoration: none;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/ripple.js"></script>
+</body>
+
+</html>

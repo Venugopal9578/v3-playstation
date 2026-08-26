@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Triangle</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 06</span>
+            <h1>Triangle</h1>
+            <p class="subtitle">Draw a perfect triangle. We will judge you.</p>
+        </header>
+        <div class="canvas-card" style="position: relative;">
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- The Hidden Score Overlay -->
+            <div id="scoreOverlay" class="overlay hidden">
+                <h2 id="scoreValue" style="font-size: 3rem; color: #fbbf24; margin-bottom: 10px;">0%</h2>
+                <p id="scoreFeedback" style="color: #cbd5e1; margin-bottom: 20px; font-size: 1.1rem; padding: 0 20px;">
+                </p>
+                <button id="resetBtn" class="action-btn-small">Try Again</button>
+            </div>
+
+            <div class="controls-bar" style="margin-top: 16px;">
+                <a href="index.html" class="action-btn-small" style="text-decoration: none;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/triangle.js"></script>
+</body>
+
+</html>

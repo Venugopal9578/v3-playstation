@@ -5,16 +5,16 @@ const rows = 15;
 const tiles = [];
 
 let isSoundEnabled = false;
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioCtx = null;
 
 function playWaveSound() {
     if (!isSoundEnabled) return;
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
 
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
 
-    // Creates a soft, resonant drop sound
     osc.type = 'sine';
     osc.frequency.setValueAtTime(400 + Math.random() * 100, audioCtx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.4);
@@ -34,6 +34,7 @@ soundToggleBtn.addEventListener('click', () => {
     if (isSoundEnabled) {
         soundToggleBtn.textContent = 'Sound: ON';
         soundToggleBtn.classList.add('active');
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
     } else {
         soundToggleBtn.textContent = 'Sound: OFF';
@@ -45,7 +46,6 @@ for (let y = 0; y < rows; y++) {
     for (let x = 0; x < columns; x++) {
         const tile = document.createElement('div');
         tile.classList.add('tile');
-
         tile.dataset.x = x;
         tile.dataset.y = y;
 
@@ -60,7 +60,7 @@ for (let y = 0; y < rows; y++) {
         tile.addEventListener('touchstart', (e) => {
             e.preventDefault();
             triggerWave();
-        });
+        }, { passive: false });
 
         gridContainer.appendChild(tile);
         tiles.push(tile);
@@ -80,11 +80,9 @@ function propagateWave(originX, originY) {
 
         setTimeout(() => {
             tile.classList.add('active');
-
             setTimeout(() => {
                 tile.classList.remove('active');
             }, 400);
-
         }, delay);
     });
 }

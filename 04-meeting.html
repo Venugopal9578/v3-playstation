@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Meeting</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 04</span>
+            <h1>Meeting</h1>
+            <p class="subtitle">A calculation of sacrificed time.</p>
+        </header>
+        <div class="canvas-card" style="padding: 40px 20px;">
+
+            <div
+                style="display: flex; flex-direction: column; gap: 20px; max-width: 350px; margin: 0 auto; text-align: left;">
+                <label style="color: #94a3b8; font-size: 0.9rem;">Meets per week:
+                    <input type="number" id="meetsPerWeek" value="5"
+                        style="width: 100%; padding: 12px; margin-top: 6px; background: #0f1117; border: 1px solid #334155; color: white; border-radius: 8px;">
+                </label>
+                <label style="color: #94a3b8; font-size: 0.9rem;">Average duration (mins):
+                    <input type="number" id="duration" value="45"
+                        style="width: 100%; padding: 12px; margin-top: 6px; background: #0f1117; border: 1px solid #334155; color: white; border-radius: 8px;">
+                </label>
+                <label style="color: #94a3b8; font-size: 0.9rem;">Years at company:
+                    <input type="number" id="years" value="3"
+                        style="width: 100%; padding: 12px; margin-top: 6px; background: #0f1117; border: 1px solid #334155; color: white; border-radius: 8px;">
+                </label>
+
+                <hr style="border-color: #334155; margin: 16px 0;">
+
+                <div style="text-align: center;">
+                    <h2 style="font-size: 3rem; color: #fbbf24; line-height: 1;"><span id="totalHours">0</span></h2>
+                    <span
+                        style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #64748b;">Total
+                        Hours Wasted</span>
+                    <p id="contextText" style="margin-top: 16px; color: #cbd5e1; font-style: italic; line-height: 1.5;">
+                    </p>
+                </div>
+            </div>
+
+            <div class="controls-bar" style="margin-top: 32px;">
+                <a href="index.html" class="action-btn-small" style="text-decoration: none;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/meeting.js"></script>
+</body>
+
+</html>

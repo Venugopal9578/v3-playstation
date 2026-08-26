@@ -4,24 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Magnetic Swarm</title>
+
+    <title>V3 PlayStation | The Ultimate Browser Arcade</title>
+    <meta name="title" content="V3 PlayStation | The Ultimate Browser Arcade">
+    <meta name="description"
+        content="Experience a curated suite of high-fidelity, interactive, and hypnotic digital experiences. Play V3 PlayStation directly in your browser.">
+    <meta name="keywords"
+        content="V3 PlayStation, browser games, kinetic orbit, magnetic swarm, interactive arcade, digital zen">
+    <meta name="robots" content="index, follow">
+
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hub-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hub-header h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .hub-header p {
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+
+        .arcade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .arcade-card {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-decoration: none;
+            color: #f8fafc;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            flex-direction: column;
+        }
+
+        .arcade-card:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            color: #fbbf24;
+        }
+
+        .arcade-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .arcade-card span {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
 </head>
 
 <body>
-    <main class="game-container">
-        <header class="game-header">
-            <span class="badge">V3 PlayStation • 10</span>
-            <h1>Magnetic Swarm</h1>
-            <p class="subtitle">Guide the luminescent flock. Watch the physics of the swarm unfold.</p>
+    <main class="hub-container">
+        <header class="hub-header">
+            <h1>V3 PLAYSTATION</h1>
+            <p>Select an experience to initiate v0.0.1.</p>
         </header>
 
-        <div class="canvas-card">
-            <canvas id="swarmCanvas"></canvas>
+        <div class="arcade-grid">
+            <a href="01-bubble.html" class="arcade-card">
+                <h3>01. Bubble</h3>
+                <span>Physics Sandbox</span>
+            </a>
+            <a href="02-descent.html" class="arcade-card">
+                <h3>02. Descent</h3>
+                <span>Kinetic Fall</span>
+            </a>
+            <a href="03-kinetic.html" class="arcade-card">
+                <h3>03. Kinetic</h3>
+                <span>Velocity Engine</span>
+            </a>
+            <a href="04-meeting.html" class="arcade-card">
+                <h3>04. Meeting</h3>
+                <span>Digital Convergence</span>
+            </a>
+            <a href="05-ripple.html" class="arcade-card">
+                <h3>05. Ripple</h3>
+                <span>Wave Propagation</span>
+            </a>
+            <a href="06-triangle.html" class="arcade-card">
+                <h3>06. Triangle</h3>
+                <span>Geometric Flow</span>
+            </a>
+            <a href="07-unsubscribe.html" class="arcade-card">
+                <h3>07. Unsubscribe</h3>
+                <span>Evasion Tactics</span>
+            </a>
+            <a href="08-zen.html" class="arcade-card">
+                <h3>08. Zen Garden</h3>
+                <span>Luminous Sand</span>
+            </a>
+            <a href="09-chimes.html" class="arcade-card">
+                <h3>09. Orbital Chimes</h3>
+                <span>Pentatonic Synth</span>
+            </a>
+            <a href="10-swarm.html" class="arcade-card">
+                <h3>10. Magnetic Swarm</h3>
+                <span>Flocking Physics</span>
+            </a>
         </div>
     </main>
-
-    <script src="js/swarm.js"></script>
 </body>
 
 </html>

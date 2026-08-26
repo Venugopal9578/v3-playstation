@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Orbital Chimes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge" style="color: #f43f5e; background: rgba(244, 63, 94, 0.15);">V3 PlayStation • 09</span>
+            <h1>Orbital Chimes</h1>
+            <p class="subtitle">Swipe or tap to weave harmonious frequencies.</p>
+        </header>
+        <div class="chime-card">
+
+            <!-- Top Action Bar aligned to match Game 1 -->
+            <div
+                style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 24px; padding: 0 4px;">
+                <button id="windToggleBtn" class="action-btn-small">Ambient Wind: OFF</button>
+            </div>
+
+            <div id="chimeBoard" class="chime-board"></div>
+
+            <div class="controls-bar" style="margin-top: 16px;">
+                <a href="index.html" class="action-btn-small"
+                    style="text-decoration: none; background: transparent; color: #94a3b8;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/chimes.js"></script>
+</body>
+
+</html>

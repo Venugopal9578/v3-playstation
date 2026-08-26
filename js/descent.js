@@ -21,7 +21,7 @@ let isDrilling = false;
 let isAscending = false;
 let lastTime = performance.now();
 const MAX_DEPTH = 6371000;
-const MAX_VELOCITY = 37800; // Recalibrated to strictly hit the 4m 30s target
+const MAX_VELOCITY = 37800;
 
 // Particle Engine State
 let particles = [];
@@ -121,7 +121,6 @@ function update(time) {
     const dt = (time - lastTime) / 1000;
     lastTime = time;
 
-    // Adjusted acceleration for the strict time limit
     if (isDrilling) {
         let maxV = 30 + Math.pow(depth, 0.78);
         if (maxV > MAX_VELOCITY) maxV = MAX_VELOCITY;
@@ -187,10 +186,10 @@ const stopDrilling = (e) => { e.preventDefault(); isDrilling = false; };
 const startAscending = (e) => { e.preventDefault(); isAscending = true; };
 const stopAscending = (e) => { e.preventDefault(); isAscending = false; };
 
-['mousedown', 'touchstart'].forEach(evt => drillBtn.addEventListener(evt, startDrilling));
+['mousedown', 'touchstart'].forEach(evt => drillBtn.addEventListener(evt, startDrilling, { passive: false }));
 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => drillBtn.addEventListener(evt, stopDrilling));
 
-['mousedown', 'touchstart'].forEach(evt => ascendBtn.addEventListener(evt, startAscending));
+['mousedown', 'touchstart'].forEach(evt => ascendBtn.addEventListener(evt, startAscending, { passive: false }));
 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => ascendBtn.addEventListener(evt, stopAscending));
 
 requestAnimationFrame(update);

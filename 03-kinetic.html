@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V3 PlayStation — Kinetic</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <span class="badge">V3 PlayStation • 03</span>
+            <h1>Kinetic</h1>
+            <p class="subtitle">Momentum and velocity engine.</p>
+        </header>
+        <div class="canvas-card">
+
+            <!-- Top Action Bar aligned to match the Bubble module -->
+            <div
+                style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 16px; padding: 0 4px;">
+                <button id="refillBtn" class="action-btn-small">Refill Swarm</button>
+            </div>
+
+            <canvas id="particleCanvas"></canvas>
+
+            <div class="controls-bar" style="margin-top: 16px;">
+                <a href="index.html" class="action-btn-small" style="text-decoration: none;">Back to Hub</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/kinetic.js"></script>
+</body>
+
+</html>

@@ -6,17 +6,19 @@ let poppedCount = 0;
 const totalBubbles = 36; // 6x6 grid
 
 const palettes = [
-    { start: '#38bdf8', end: '#0284c7' }, // Cyan / Blue
-    { start: '#a855f7', end: '#7e22ce' }, // Purple / Violet
-    { start: '#f43f5e', end: '#be123c' }, // Rose / Red
-    { start: '#10b981', end: '#047857' }, // Emerald / Green
-    { start: '#f59e0b', end: '#b45309' }, // Amber / Orange
-    { start: '#ec4899', end: '#be185d' }  // Pink / Fuchsia
+    { start: '#38bdf8', end: '#0284c7' },
+    { start: '#a855f7', end: '#7e22ce' },
+    { start: '#f43f5e', end: '#be123c' },
+    { start: '#10b981', end: '#047857' },
+    { start: '#f59e0b', end: '#b45309' },
+    { start: '#ec4899', end: '#be185d' }
 ];
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// Audio context deferred to prevent browser termination on load
+let audioCtx = null;
 
 function playPopSound() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
@@ -62,7 +64,7 @@ function createSheet() {
         };
 
         bubble.addEventListener('mousedown', popAction);
-        bubble.addEventListener('touchstart', popAction);
+        bubble.addEventListener('touchstart', popAction, { passive: false });
 
         bubble.addEventListener('mouseover', (e) => {
             if (e.buttons === 1 && !bubble.classList.contains('popped')) {
