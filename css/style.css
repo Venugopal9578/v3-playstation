@@ -17,7 +17,7 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     padding: 20px;
     text-align: center;
 }
@@ -28,8 +28,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 700;
-    color: #a855f7;
-    background: rgba(168, 85, 247, 0.15);
+    color: #f43f5e;
+    background: rgba(244, 63, 94, 0.15);
     padding: 4px 10px;
     border-radius: 999px;
     margin-bottom: 12px;
@@ -47,25 +47,63 @@ h1 {
     font-size: 0.95rem;
 }
 
-.canvas-card {
+.chime-card {
     background: #1e293b;
-    padding: 16px;
+    padding: 32px 24px;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     border: 1px solid #334155;
 }
 
-canvas {
-    display: block;
+.chime-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    place-items: center;
+    margin-bottom: 32px;
+}
+
+.orb {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #0f1117;
+    border: 2px solid #334155;
+    cursor: pointer;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.6), 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+/* The glowing inner core */
+.orb::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0%;
+    height: 0%;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transition: all 0.4s ease-out;
+}
+
+/* Active State triggered by JS */
+.orb.active {
+    border-color: currentColor;
+    transform: scale(1.15) translateY(-5px);
+    box-shadow: 0 10px 25px currentColor;
+}
+
+.orb.active::after {
     width: 100%;
-    height: 380px;
-    border-radius: 8px;
-    background: #000000;
-    cursor: crosshair;
+    height: 100%;
+    opacity: 0.6;
 }
 
 .controls-bar {
-    margin-top: 16px;
     display: flex;
     justify-content: center;
 }
@@ -74,10 +112,10 @@ canvas {
     background: #334155;
     color: #cbd5e1;
     border: 1px solid #475569;
-    padding: 8px 20px;
+    padding: 8px 24px;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -85,4 +123,11 @@ canvas {
 .action-btn-small:hover {
     background: #475569;
     color: #ffffff;
+}
+
+.action-btn-small.active {
+    background: #f43f5e;
+    color: #ffffff;
+    border-color: #f43f5e;
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
 }

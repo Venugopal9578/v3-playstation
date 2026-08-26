@@ -4,27 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Zen Garden</title>
+    <title>V3 PlayStation — Orbital Chimes</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 08</span>
-            <h1>Zen Garden</h1>
-            <p class="subtitle">Trace your finger or cursor to weave luminous sand paths.</p>
+            <span class="badge">V3 PlayStation • 09</span>
+            <h1>Orbital Chimes</h1>
+            <p class="subtitle">Swipe or tap to weave harmonious frequencies. Impossible to play a wrong note.</p>
         </header>
 
-        <div class="canvas-card">
-            <canvas id="zenCanvas"></canvas>
+        <div class="chime-card">
+            <div id="chimeBoard" class="chime-board">
+                <!-- JS will inject the 9 orbital pads here -->
+            </div>
+
             <div class="controls-bar">
-                <button id="clearBtn" class="action-btn-small">Smooth Slate</button>
+                <button id="windToggleBtn" class="action-btn-small">Ambient Wind: OFF</button>
             </div>
         </div>
     </main>
 
-    <script src="js/zen.js"></script>
+    <script src="js/chimes.js"></script>
 </body>
 
 </html>
