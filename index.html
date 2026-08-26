@@ -4,30 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Orbital Chimes</title>
+    <title>V3 PlayStation — Magnetic Swarm</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 09</span>
-            <h1>Orbital Chimes</h1>
-            <p class="subtitle">Swipe or tap to weave harmonious frequencies. Impossible to play a wrong note.</p>
+            <span class="badge">V3 PlayStation • 10</span>
+            <h1>Magnetic Swarm</h1>
+            <p class="subtitle">Guide the luminescent flock. Watch the physics of the swarm unfold.</p>
         </header>
 
-        <div class="chime-card">
-            <div id="chimeBoard" class="chime-board">
-                <!-- JS will inject the 9 orbital pads here -->
-            </div>
-
-            <div class="controls-bar">
-                <button id="windToggleBtn" class="action-btn-small">Ambient Wind: OFF</button>
-            </div>
+        <div class="canvas-card">
+            <canvas id="swarmCanvas"></canvas>
         </div>
     </main>
 
-    <script src="js/chimes.js"></script>
+    <script src="js/swarm.js"></script>
 </body>
 
 </html>
