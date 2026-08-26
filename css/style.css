@@ -1,3 +1,7 @@
+:root {
+    --wave-hue: 199;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,7 +21,7 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
     padding: 20px;
     text-align: center;
 }
@@ -28,8 +32,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 700;
-    color: #f59e0b;
-    background: rgba(245, 158, 11, 0.15);
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
     padding: 4px 10px;
     border-radius: 999px;
     margin-bottom: 12px;
@@ -47,45 +51,64 @@ h1 {
     font-size: 0.95rem;
 }
 
-.canvas-container {
+.board-container {
     background: #1e293b;
-    padding: 12px;
+    padding: 16px;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     border: 1px solid #334155;
-}
-
-canvas {
-    display: block;
-    width: 100%;
-    height: 400px;
-    border-radius: 8px;
-    background: #000000;
-    cursor: crosshair;
-}
-
-.controls-bar {
-    margin-top: 16px;
     display: flex;
     justify-content: center;
 }
 
-.action-btn {
-    background: #38bdf8;
-    color: #0f172a;
-    border: none;
-    padding: 10px 24px;
+.ripple-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 4px;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+}
+
+.tile {
+    background-color: #0f1117;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease;
+}
+
+.tile.active {
+    transform: scale(0.3) translateY(-10px);
+    background-color: hsl(var(--wave-hue), 100%, 60%);
+    box-shadow: 0 10px 20px hsla(var(--wave-hue), 100%, 60%, 0.5);
+    border-radius: 50%;
+}
+
+.controls-bar {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.action-btn-small {
+    background: #334155;
+    color: #cbd5e1;
+    border: 1px solid #475569;
+    padding: 8px 16px;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: all 0.2s;
 }
 
-.action-btn:hover {
-    background: #7dd3fc;
+.action-btn-small:hover {
+    background: #475569;
+    color: #ffffff;
 }
 
-.action-btn:active {
-    transform: scale(0.95);
+.action-btn-small.active {
+    background: #10b981;
+    color: #064e3b;
+    border-color: #10b981;
 }

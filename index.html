@@ -4,27 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Kinetic Orbit</title>
+    <title>V3 PlayStation — Grid Ripple</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 06</span>
-            <h1>Kinetic Orbit</h1>
-            <p class="subtitle">Click and drag to bend the flow. Release to scatter.</p>
+            <span class="badge">V3 PlayStation • 07</span>
+            <h1>Grid Ripple</h1>
+            <p class="subtitle">Tap the surface. Watch the kinetic wave propagate.</p>
         </header>
 
-        <div class="canvas-container">
-            <canvas id="particleCanvas"></canvas>
-            <div class="controls-bar">
-                <button id="refillBtn" class="action-btn">Repopulate Nebula</button>
+        <div class="board-container">
+            <div id="rippleGrid" class="ripple-grid">
+                <!-- JS will inject the matrix of tiles here -->
             </div>
+        </div>
+
+        <div class="controls-bar">
+            <button id="soundToggleBtn" class="action-btn-small">Sound: OFF</button>
         </div>
     </main>
 
-    <script src="js/kinetic.js"></script>
+    <script src="js/ripple.js"></script>
 </body>
 
 </html>
