@@ -205,6 +205,139 @@
         }
 
         /* ==================================================
+           NEAL.FUN-INSPIRED CARTOON FOOTER & REALISTIC BAT FLIGHT
+           ================================================== */
+
+        .site-footer {
+            margin-top: 40px;
+            padding: 40px 20px 60px;
+            text-align: center;
+            border-top: 3px dashed #cbd5e1;
+            font-family: 'Rajdhani', sans-serif, system-ui, sans-serif;
+        }
+
+        .footer-intro {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .footer-btn {
+            background: #ffffff;
+            border: 3px solid #0f172a;
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0f172a;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 0px #0f172a;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .footer-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0px #0f172a;
+            background: #f1f5f9;
+        }
+
+        .footer-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0px #0f172a;
+        }
+
+        .footer-meta {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .footer-meta a {
+            color: #0f172a;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Interactive Startled Bat Flight & Teleport Animation */
+        .footer-easter-egg {
+            margin-top: 30px;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .footer-easter-egg:hover {
+            transform: scale(1.25);
+        }
+
+        @keyframes batStartledFly {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            25% {
+                transform: translateY(-120px) translateX(-15px) rotate(-8deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-300px) translateX(15px) rotate(8deg);
+                opacity: 1;
+            }
+
+            80% {
+                transform: translateY(-500px) translateX(-5px) rotate(-3deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-700px) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes batBlinkIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.4) rotate(0deg);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.2) rotate(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .flying-startled {
+            animation: batStartledFly 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .teleport-blink {
+            animation: batBlinkIn 0.35s ease-out forwards;
+        }
+
+        /* ==================================================
            MOBILE
            ================================================== */
 
@@ -238,6 +371,10 @@
 
             .arcade-card {
                 min-height: 170px;
+            }
+
+            .footer-links {
+                gap: 8px;
             }
         }
     </style>
@@ -432,10 +569,44 @@
 
         </div>
 
+        <!-- ==================================================
+             CARTOON FOOTER WITH STARTLED BAT FLIGHT & TELEPORT
+             ================================================== -->
+
+        <footer class="site-footer">
+            <p class="footer-intro">Hi! I'm Venu. This is where I build browser experiences. Obligatory links:</p>
+
+            <div class="footer-links">
+                <a href="https://github.com/Venugopal9578" target="_blank" class="footer-btn">
+                    <span>🐙</span> GitHub
+                </a>
+                <a href="https://twitter.com" target="_blank" class="footer-btn">
+                    <span>🐦</span> Twitter
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="footer-btn">
+                    <span>💼</span> LinkedIn
+                </a>
+                <a href="mailto:contact@v3playstation.dev" class="footer-btn">
+                    <span>✉️</span> Contact Me
+                </a>
+            </div>
+
+            <div class="footer-meta">
+                Contact - <a href="mailto:contact@v3playstation.dev">venugopal@v3playstation.dev</a>
+            </div>
+            <div class="footer-meta" style="font-size: 0.85rem; opacity: 0.7;">
+                V3 PlayStation Arcade &bull; Built with Python, HTML5, & Absolute Focus
+            </div>
+
+            <div class="footer-easter-egg" id="footerBat" title="Click to disturb the bat!">
+                🦇
+            </div>
+        </footer>
+
     </main>
 
     <!-- ==================================================
-         PRECISION CURSOR TRACKING (UNTOUCHED)
+         PRECISION CURSOR TRACKING & STARTLED BAT MECHANIC
          ================================================== -->
 
     <script>
@@ -459,6 +630,36 @@
 
         window.addEventListener("mouseleave", () => {
             batEmblem.style.transform = "translate(0, 0) rotate(0deg)";
+        });
+
+        /* Footer Startled Bat Flight & Teleport Mechanic */
+        const footerBat = document.getElementById("footerBat");
+        let isBatInFlight = false;
+
+        footerBat.addEventListener("click", () => {
+            if (isBatInFlight) return;
+            isBatInFlight = true;
+
+            // Startle straight up off-screen at full size
+            footerBat.classList.remove("teleport-blink");
+            footerBat.classList.add("flying-startled");
+
+            // After it clears the top, keep it hidden momentarily, then teleport back with a blink
+            setTimeout(() => {
+                footerBat.classList.remove("flying-startled");
+                footerBat.style.opacity = "0"; // fully hidden while away
+
+                // Wait 1 second off-screen, then blink/teleport back to original roost
+                setTimeout(() => {
+                    footerBat.style.opacity = "1";
+                    footerBat.classList.add("teleport-blink");
+
+                    setTimeout(() => {
+                        footerBat.classList.remove("teleport-blink");
+                        isBatInFlight = false;
+                    }, 350); // match blink animation duration
+                }, 1000);
+            }, 650); // match flying-startled animation duration
         });
     </script>
 
