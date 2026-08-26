@@ -4,30 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V3 PlayStation — Grid Ripple</title>
+    <title>V3 PlayStation — Zen Garden</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main class="game-container">
         <header class="game-header">
-            <span class="badge">V3 PlayStation • 07</span>
-            <h1>Grid Ripple</h1>
-            <p class="subtitle">Tap the surface. Watch the kinetic wave propagate.</p>
+            <span class="badge">V3 PlayStation • 08</span>
+            <h1>Zen Garden</h1>
+            <p class="subtitle">Trace your finger or cursor to weave luminous sand paths.</p>
         </header>
 
-        <div class="board-container">
-            <div id="rippleGrid" class="ripple-grid">
-                <!-- JS will inject the matrix of tiles here -->
+        <div class="canvas-card">
+            <canvas id="zenCanvas"></canvas>
+            <div class="controls-bar">
+                <button id="clearBtn" class="action-btn-small">Smooth Slate</button>
             </div>
-        </div>
-
-        <div class="controls-bar">
-            <button id="soundToggleBtn" class="action-btn-small">Sound: OFF</button>
         </div>
     </main>
 
-    <script src="js/ripple.js"></script>
+    <script src="js/zen.js"></script>
 </body>
 
 </html>
