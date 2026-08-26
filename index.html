@@ -6,15 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>V3 PlayStation | The Ultimate Browser Arcade</title>
-    <meta name="title" content="V3 PlayStation | The Ultimate Browser Arcade">
-    <meta name="description"
-        content="Experience a curated suite of high-fidelity, interactive, and hypnotic digital experiences. Play V3 PlayStation directly in your browser.">
-    <meta name="keywords"
-        content="V3 PlayStation, browser games, kinetic orbit, magnetic swarm, interactive arcade, digital zen">
-    <meta name="robots" content="index, follow">
+
+    <!-- Google Fonts: High-Impact Comic/Action Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+
     <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
         .hub-container {
             width: 100%;
             max-width: 1200px;
@@ -23,107 +29,439 @@
             text-align: center;
         }
 
-        .hub-header h1 {
-            font-size: 3rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+        .hub-header {
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .hub-header p {
-            color: #94a3b8;
-            margin-bottom: 40px;
+        /* ==================================================
+           BATMAN-INSPIRED HEADING STYLING (TEXT ONLY)
+           ================================================== */
+
+        .logo-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            line-height: 1;
+            margin-bottom: 10px;
+            user-select: none;
+
+            /* Sharp, cinematic comic-book shadow */
+            text-shadow: 3px 3px 0px #e2e8f0, 6px 6px 0px #cbd5e1;
         }
+
+        /* ==================================================
+           YOUR ORIGINAL WORKING BAT AVATAR (STRICTLY UNTOUCHED)
+           ================================================== */
+
+        .avatar-container {
+            position: relative;
+            width: 55px;
+            height: 55px;
+            display: inline-block;
+            vertical-align: middle;
+
+            filter: drop-shadow(0 4px 12px rgba(251, 191, 36, 0.6));
+        }
+
+        .avatar-container svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        #batEmblem {
+            transform-box: view-box;
+            transform-origin: 50% 50%;
+        }
+
+        .hub-subtitle {
+            color: #64748b;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        /* ==================================================
+           ARCADE GRID
+           ================================================== */
 
         .arcade-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+            padding-bottom: 60px;
         }
 
         .arcade-card {
-            background: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 12px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 32px 24px;
             text-decoration: none;
-            color: #f8fafc;
-            transition: all 0.2s ease-in-out;
+
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 150px;
-            flex-direction: column;
+
+            min-height: 190px;
+
+            position: relative;
+            overflow: hidden;
+
+            border: 4px solid #0f172a;
+            box-shadow: 0 8px 0px #0f172a;
+
+            text-align: center;
         }
 
         .arcade-card:hover {
-            transform: translateY(-5px);
-            border-color: #fbbf24;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            color: #fbbf24;
+            transform: translateY(-6px);
+            box-shadow: 0 14px 0px #0f172a;
+        }
+
+        .arcade-card:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 0px #0f172a;
         }
 
         .arcade-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+            font-weight: 800;
+            color: #0f172a;
         }
 
         .arcade-card span {
-            font-size: 0.9rem;
-            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            color: #334155;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 4px 12px;
+            border-radius: 99px;
+            border: 2px solid #0f172a;
+        }
+
+        /* ==================================================
+           CARD COLORS
+           ================================================== */
+
+        .card-bubble {
+            background: #38bdf8;
+        }
+
+        .card-descent {
+            background: #fbbf24;
+        }
+
+        .card-kinetic {
+            background: #a855f7;
+        }
+
+        .card-meeting {
+            background: #34d399;
+        }
+
+        .card-ripple {
+            background: #60a5fa;
+        }
+
+        .card-triangle {
+            background: #f43f5e;
+        }
+
+        .card-unsubscribe {
+            background: #94a3b8;
+        }
+
+        .card-zen {
+            background: #2dd4bf;
+        }
+
+        .card-chimes {
+            background: #f472b6;
+        }
+
+        .card-swarm {
+            background: #818cf8;
+        }
+
+        .doodle-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            filter: drop-shadow(2px 2px 0px #0f172a);
+        }
+
+        /* ==================================================
+           MOBILE
+           ================================================== */
+
+        @media (max-width: 600px) {
+            .hub-container {
+                padding: 30px 16px;
+            }
+
+            .logo-title {
+                font-size: 2.6rem;
+                gap: 10px;
+            }
+
+            .avatar-container {
+                width: 46px;
+                height: 46px;
+            }
+
+            .hub-header {
+                margin-bottom: 35px;
+            }
+
+            .hub-subtitle {
+                font-size: 1rem;
+            }
+
+            .arcade-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+
+            .arcade-card {
+                min-height: 170px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <main class="hub-container">
+
+        <!-- ==================================================
+             HEADER
+             ================================================== -->
+
         <header class="hub-header">
-            <h1>V3 PLAYSTATION</h1>
-            <p>Select an experience to initiate v0.0.1.</p>
+
+            <h1 class="logo-title">
+
+                v3
+
+                <!-- ==================================================
+                     EXACT ORIGINAL WORKING BAT AVATAR (STRICTLY UNTOUCHED)
+                     ================================================== -->
+
+                <div class="avatar-container" id="trackerAvatar">
+
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="V3 Bat Logo">
+
+                        <!-- Yellow Circle -->
+                        <circle cx="50" cy="50" r="46" fill="#fbbf24" stroke="#0f172a" stroke-width="5" />
+
+                        <!-- SAFE INNER CLIP -->
+                        <defs>
+                            <clipPath id="batSafeArea">
+                                <circle cx="50" cy="50" r="41" />
+                            </clipPath>
+                        </defs>
+
+                        <!-- Bat -->
+                        <g id="batEmblem" clip-path="url(#batSafeArea)" transform-origin="50 50">
+
+                            <path fill="#0f172a" d="
+                                    M 14 30
+
+                                    C 21 31,
+                                      28 31,
+                                      35 31
+
+                                    C 40 31,
+                                      43 32,
+                                      45 29
+
+                                    C 46 27,
+                                      46 24,
+                                      45 21
+
+                                    C 47 23,
+                                      48 25,
+                                      50 25
+
+                                    C 52 25,
+                                      53 23,
+                                      55 21
+
+                                    C 54 24,
+                                      54 27,
+                                      55 29
+
+                                    C 57 32,
+                                      60 31,
+                                      65 31
+
+                                    C 72 31,
+                                      79 31,
+                                      86 30
+
+                                    C 81 34,
+                                      78 38,
+                                      77 43
+
+                                    C 76 46,
+                                      76 49,
+                                      76 52
+
+                                    C 70 52,
+                                      65 52,
+                                      61 54
+
+                                    C 56 56,
+                                      53 60,
+                                      50 67
+
+                                    C 47 60,
+                                      44 56,
+                                      39 54
+
+                                    C 35 52,
+                                      30 52,
+                                      24 52
+
+                                    C 24 49,
+                                      24 46,
+                                      23 43
+
+                                    C 22 38,
+                                      19 34,
+                                      14 30
+
+                                    Z
+                                " />
+
+                        </g>
+
+                    </svg>
+
+                </div>
+
+                playstation
+
+            </h1>
+
+            <p class="hub-subtitle">
+                games and stuff by venu
+            </p>
+
         </header>
 
+        <!-- ==================================================
+             ARCADE GRID
+             ================================================== -->
+
         <div class="arcade-grid">
-            <a href="01-bubble.html" class="arcade-card">
-                <h3>01. Bubble</h3>
+
+            <a href="01-bubble.html" class="arcade-card card-bubble">
+                <div class="doodle-icon">🫧</div>
+                <h3>Bubble Wrap</h3>
                 <span>Physics Sandbox</span>
             </a>
-            <a href="02-descent.html" class="arcade-card">
-                <h3>02. Descent</h3>
+
+            <a href="02-descent.html" class="arcade-card card-descent">
+                <div class="doodle-icon">⛏️</div>
+                <h3>Core Descent</h3>
                 <span>Kinetic Fall</span>
             </a>
-            <a href="03-kinetic.html" class="arcade-card">
-                <h3>03. Kinetic</h3>
+
+            <a href="03-kinetic.html" class="arcade-card card-kinetic">
+                <div class="doodle-icon">✨</div>
+                <h3>Kinetic Swarm</h3>
                 <span>Velocity Engine</span>
             </a>
-            <a href="04-meeting.html" class="arcade-card">
-                <h3>04. Meeting</h3>
+
+            <a href="04-meeting.html" class="arcade-card card-meeting">
+                <div class="doodle-icon">📅</div>
+                <h3>Meeting Waster</h3>
                 <span>Digital Convergence</span>
             </a>
-            <a href="05-ripple.html" class="arcade-card">
-                <h3>05. Ripple</h3>
+
+            <a href="05-ripple.html" class="arcade-card card-ripple">
+                <div class="doodle-icon">🌊</div>
+                <h3>Ripple Waves</h3>
                 <span>Wave Propagation</span>
             </a>
-            <a href="06-triangle.html" class="arcade-card">
-                <h3>06. Triangle</h3>
+
+            <a href="06-triangle.html" class="arcade-card card-triangle">
+                <div class="doodle-icon">📐</div>
+                <h3>Triangle Judge</h3>
                 <span>Geometric Flow</span>
             </a>
-            <a href="07-unsubscribe.html" class="arcade-card">
-                <h3>07. Unsubscribe</h3>
+
+            <a href="07-unsubscribe.html" class="arcade-card card-unsubscribe">
+                <div class="doodle-icon">🏃‍♂️</div>
+                <h3>Unsubscribe</h3>
                 <span>Evasion Tactics</span>
             </a>
-            <a href="08-zen.html" class="arcade-card">
-                <h3>08. Zen Garden</h3>
+
+            <a href="08-zen.html" class="arcade-card card-zen">
+                <div class="doodle-icon">🏖️</div>
+                <h3>Zen Garden</h3>
                 <span>Luminous Sand</span>
             </a>
-            <a href="09-chimes.html" class="arcade-card">
-                <h3>09. Orbital Chimes</h3>
+
+            <a href="09-chimes.html" class="arcade-card card-chimes">
+                <div class="doodle-icon">🎵</div>
+                <h3>Orbital Chimes</h3>
                 <span>Pentatonic Synth</span>
             </a>
-            <a href="10-swarm.html" class="arcade-card">
-                <h3>10. Magnetic Swarm</h3>
+
+            <a href="10-swarm.html" class="arcade-card card-swarm">
+                <div class="doodle-icon">🪐</div>
+                <h3>Magnetic Swarm</h3>
                 <span>Flocking Physics</span>
             </a>
+
         </div>
+
     </main>
+
+    <!-- ==================================================
+         PRECISION CURSOR TRACKING (UNTOUCHED)
+         ================================================== -->
+
+    <script>
+        const avatar = document.getElementById("trackerAvatar");
+        const batEmblem = document.getElementById("batEmblem");
+
+        window.addEventListener("mousemove", (e) => {
+            const rect = avatar.getBoundingClientRect();
+            const avatarX = rect.left + rect.width / 2;
+            const avatarY = rect.top + rect.height / 2;
+
+            const deltaX = e.clientX - avatarX;
+            const deltaY = e.clientY - avatarY;
+
+            const moveX = Math.min(1.5, Math.max(-1.5, deltaX / 70));
+            const moveY = Math.min(1.5, Math.max(-1.5, deltaY / 70));
+            const tilt = Math.min(4, Math.max(-4, deltaX / 55));
+
+            batEmblem.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${tilt}deg)`;
+        });
+
+        window.addEventListener("mouseleave", () => {
+            batEmblem.style.transform = "translate(0, 0) rotate(0deg)";
+        });
+    </script>
+
 </body>
 
 </html>
