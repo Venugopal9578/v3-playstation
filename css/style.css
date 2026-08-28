@@ -221,6 +221,10 @@ canvas {
     background: #10b981;
 }
 
+.card-nexus {
+    background: #6366f1;
+}
+
 .instructions {
     background: rgba(0, 243, 255, 0.05);
     border: 1px solid rgba(0, 243, 255, 0.2);
