@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: #050505;
+    background-color: #05070c;
     color: #f1f5f9;
     min-height: 100vh;
     overflow-x: hidden;
@@ -32,8 +32,8 @@ body {
     padding: 4px 10px;
     border-radius: 999px;
     margin-bottom: 12px;
-    background: rgba(251, 191, 36, 0.15);
-    color: #fbbf24;
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
 }
 
 h1 {
@@ -43,17 +43,17 @@ h1 {
 }
 
 .subtitle {
-    color: #94a3b8;
+    color: #8ab4f8;
     margin-bottom: 24px;
     font-size: 0.95rem;
 }
 
 .canvas-card {
-    background: #111827;
+    background: #0d1322;
     padding: 12px;
-    border-radius: 16px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-    border: 1px solid #1f2937;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1f2d50;
 }
 
 canvas {
@@ -75,11 +75,11 @@ canvas {
 }
 
 .action-btn-small {
-    background: #334155;
-    color: #cbd5e1;
-    border: 1px solid #475569;
+    background: #2d3748;
+    color: #a0aec0;
+    border: 1px solid transparent;
     padding: 8px 20px;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
@@ -88,8 +88,9 @@ canvas {
 }
 
 .action-btn-small:hover {
-    background: #475569;
+    background: #3a4a63;
     color: #ffffff;
+    border-color: #4a5a73;
 }
 
 /* Master Hub Grid */
@@ -124,9 +125,7 @@ canvas {
 
 .arcade-card:hover {
     transform: translateY(-5px);
-    border-color: #fbbf24;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    color: #fbbf24;
 }
 
 .arcade-card h3 {
@@ -141,10 +140,11 @@ canvas {
 
 /* Orbital Chimes Specifics */
 .chime-card {
-    background: #1e293b;
+    background: #0d1322;
     padding: 32px 24px;
-    border-radius: 16px;
-    border: 1px solid #334155;
+    border-radius: 12px;
+    border: 1px solid #1f2d50;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .chime-board {
@@ -159,8 +159,8 @@ canvas {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: #0f1117;
-    border: 2px solid #334155;
+    background: #05070c;
+    border: 2px solid #1f2d50;
     cursor: pointer;
     transition: all 0.4s;
     position: relative;
@@ -194,49 +194,142 @@ canvas {
 
 
 /* ==========================================
-   Neon Circuit Specifics (Module 11)
+   Hub Card & Game Theme Overrides (Crypto Ticker Fixed)
    ========================================== */
 
 .card-circuit {
-    background: #22d3ee;
+    background: #22d3ee !important;
+    color: #05070c !important;
+    border-color: #22d3ee !important;
+}
+
+.card-circuit h3,
+.card-circuit span {
+    color: #05070c !important;
 }
 
 .card-snake {
-    background: #a855f7;
+    background: #a855f7 !important;
+    color: #05070c !important;
+    border-color: #a855f7 !important;
+}
+
+.card-snake h3,
+.card-snake span {
+    color: #05070c !important;
 }
 
 .card-bounce {
-    background: #f97316;
+    background: #f97316 !important;
+    color: #05070c !important;
+    border-color: #f97316 !important;
+}
+
+.card-bounce h3,
+.card-bounce span {
+    color: #05070c !important;
 }
 
 .card-stellar {
-    background: #ec4899;
+    background: #ec4899 !important;
+    color: #05070c !important;
+    border-color: #ec4899 !important;
+}
+
+.card-stellar h3,
+.card-stellar span {
+    color: #05070c !important;
 }
 
 .card-stack {
-    background: #06b6d4;
+    background: #06b6d4 !important;
+    color: #05070c !important;
+    border-color: #06b6d4 !important;
+}
+
+.card-stack h3,
+.card-stack span {
+    color: #05070c !important;
 }
 
 .card-synapse {
-    background: #10b981;
+    background: #10b981 !important;
+    color: #05070c !important;
+    border-color: #10b981 !important;
+}
+
+.card-synapse h3,
+.card-synapse span {
+    color: #05070c !important;
 }
 
 .card-nexus {
-    background: #6366f1;
+    background: #6366f1 !important;
+    color: #05070c !important;
+    border-color: #6366f1 !important;
+}
+
+.card-nexus h3,
+.card-nexus span {
+    color: #05070c !important;
 }
 
 .card-cipher {
-    background: #8b5cf6;
+    background: #8b5cf6 !important;
+    color: #05070c !important;
+    border-color: #8b5cf6 !important;
+}
+
+.card-cipher h3,
+.card-cipher span {
+    color: #05070c !important;
 }
 
 .card-osint {
-    background: #ef4444;
+    background: #ef4444 !important;
+    color: #05070c !important;
+    border-color: #ef4444 !important;
+}
+
+.card-osint h3,
+.card-osint span {
+    color: #05070c !important;
+}
+
+.card-thermal {
+    background: #06b6d4 !important;
+    color: #05070c !important;
+    border-color: #06b6d4 !important;
+}
+
+.card-thermal h3,
+.card-thermal span {
+    color: #05070c !important;
+}
+
+.card-ticker {
+    background: #eab308 !important;
+    color: #05070c !important;
+    border-color: #eab308 !important;
+}
+
+.card-ticker h3 {
+    color: #05070c !important;
+}
+
+.card-ticker span {
+    background: rgba(5, 7, 12, 0.1) !important;
+    color: #05070c !important;
+}
+
+.arcade-card:hover {
+    border-color: #ffffff !important;
 }
 
 .instructions {
-    background: rgba(0, 243, 255, 0.05);
-    border: 1px solid rgba(0, 243, 255, 0.2);
-    border-left: 3px solid #00f3ff;
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-left: 3px solid #10b981;
     padding: 0.75rem;
     font-size: 0.85rem;
     color: #8ab4f8;
@@ -247,7 +340,7 @@ canvas {
 }
 
 .instructions strong {
-    color: #00f3ff;
+    color: #10b981;
     letter-spacing: 1px;
 }
 
@@ -261,7 +354,7 @@ canvas {
 }
 
 .stats-bar strong {
-    color: #00f3ff;
+    color: #10b981;
 }
 
 .grid-board {
@@ -304,13 +397,13 @@ canvas {
 
 .node.pulse {
     background: #1a3c5e;
-    border-color: #00f3ff;
-    box-shadow: 0 0 20px #00f3ff;
+    border-color: #10b981;
+    box-shadow: 0 0 20px #10b981;
     transform: scale(1.04);
 }
 
 .node.pulse .node-core {
-    background: #00f3ff;
+    background: #10b981;
     box-shadow: 0 0 10px #fff;
     border-color: #fff;
 }
@@ -346,17 +439,18 @@ canvas {
 }
 
 .modal-content {
-    background: #131b2e;
+    background: #0d1322;
     padding: 2rem;
     border-radius: 12px;
-    border: 2px solid #ff3366;
-    box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+    border: 2px solid #eab308;
+    box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
     width: 100%;
+    max-width: 400px;
 }
 
 .modal-content h2 {
-    color: #ff3366;
-    text-shadow: 0 0 15px #ff3366;
+    color: #eab308;
+    text-shadow: 0 0 15px currentColor;
     margin-bottom: 0.5rem;
     letter-spacing: 2px;
     font-size: 1.5rem;
@@ -370,8 +464,8 @@ canvas {
 
 .modal-btn {
     background: transparent;
-    color: #ff3366;
-    border: 2px solid #ff3366;
+    color: #fff;
+    border: 2px solid #3b598c;
     padding: 0.8rem;
     font-size: 0.95rem;
     font-weight: bold;
@@ -383,7 +477,6 @@ canvas {
 }
 
 .modal-btn:hover {
-    background: #ff3366;
-    color: #05070c;
-    box-shadow: 0 0 15px #ff3366;
+    background: #3b598c;
+    color: #fff;
 }
