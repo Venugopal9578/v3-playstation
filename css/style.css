@@ -213,13 +213,14 @@ canvas {
     background: #ec4899;
 }
 
-<<<<<<< HEAD
-=======
 .card-stack {
     background: #06b6d4;
 }
 
->>>>>>> feature/game-15-quantum-stack
+.card-synapse {
+    background: #10b981;
+}
+
 .instructions {
     background: rgba(0, 243, 255, 0.05);
     border: 1px solid rgba(0, 243, 255, 0.2);
