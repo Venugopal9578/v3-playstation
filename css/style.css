@@ -192,9 +192,8 @@ canvas {
     opacity: 0.6;
 }
 
-
 /* ==========================================
-   Hub Card & Game Theme Overrides (Crypto Ticker Fixed)
+   Hub Card & Game Theme Overrides
    ========================================== */
 
 .card-circuit {
@@ -322,10 +321,23 @@ canvas {
     color: #05070c !important;
 }
 
+/* Chrome Protocol Override */
+.card-runner {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+}
+
+.card-runner h3,
+.card-runner span {
+    color: #0f172a !important;
+}
+
 .arcade-card:hover {
     border-color: #ffffff !important;
 }
 
+/* Component Styles */
 .instructions {
     background: rgba(16, 185, 129, 0.05);
     border: 1px solid rgba(16, 185, 129, 0.2);

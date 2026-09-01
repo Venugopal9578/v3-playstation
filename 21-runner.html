@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Salaar | V3 PlayStation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Container Structure Override */
+        .arcade-header {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .arcade-container {
+            max-width: 750px;
+            width: 100%;
+            background: #0d1322;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #1f2d50;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Strict Canvas Isolation */
+        .runner-canvas {
+            background-color: #ffffff;
+            border: 2px solid #1f2d50;
+            border-radius: 12px;
+            width: 100%;
+            height: 250px;
+            image-rendering: pixelated;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1), 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .runner-hud {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            color: #8ab4f8;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            width: 100%;
+        }
+
+        /* UI Button Architecture */
+        .arcade-btn {
+            background: #94a3b8;
+            color: #0f172a;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .arcade-btn:hover:not(:disabled) {
+            background: #f1f5f9;
+            box-shadow: 0 0 15px rgba(241, 245, 249, 0.4);
+        }
+
+        .arcade-btn:disabled {
+            background: #1e293b;
+            color: #475569;
+            cursor: not-allowed;
+        }
+
+        .hub-action {
+            border-top: 1px solid #1f2d50;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hub-btn {
+            display: inline-block;
+            background: #2d3748;
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .hub-btn:hover {
+            background: #3a4a63;
+            color: #fff;
+            border-color: #4a5a73;
+        }
+    </style>
+</head>
+
+<body class="circuit-body">
+
+    <div class="arcade-header">
+        <span class="badge">V3 PLAYSTATION - 21</span>
+        <h1>Dino Salaar</h1>
+        <p class="subtitle">Endless terrain simulation.</p>
+    </div>
+
+    <div class="arcade-container">
+
+        <div id="gameOverModal" class="modal-overlay">
+            <div class="modal-content">
+                <h2>SIMULATION OFFLINE</h2>
+                <p>Distance Traveled: <strong id="finalScoreDisplay">0</strong></p>
+                <button id="modalDismissBtn" class="modal-btn">Acknowledge</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>PROTOCOL:</strong> Initiate the simulation. Utilize [SPACEBAR] to leap over terrestrial hazards and
+            [DOWN ARROW] to slide beneath aerial threats.
+        </div>
+
+        <div class="runner-hud">
+            HI <span id="highScore">00000</span>
+            &nbsp;
+            <span id="score">00000</span>
+        </div>
+
+        <canvas id="gameCanvas" width="700" height="250" class="runner-canvas"></canvas>
+
+        <button id="actionBtn" class="arcade-btn">TAP TO RUN SALAAR</button>
+
+        <div class="hub-action">
+            <a href="index.html" class="hub-btn">Back to Hub</a>
+        </div>
+    </div>
+
+    <script src="js/runner.js"></script>
+</body>
+
+</html>
