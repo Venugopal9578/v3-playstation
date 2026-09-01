@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==================================================
-// VISIBLE GLOSSY TOUCH MATRIX
+// VISIBLE GLOSSY TOUCH MATRIX (INSIDE ENGINE SCOPE)
 // ==================================================
 
 const btnDuck = document.getElementById('btnDuck');
@@ -920,19 +920,21 @@ if (btnJump && btnDuck) {
     // JUMP & IGNITION BUTTON
     // ------------------------------------------
     btnJump.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Block screen movement
+        e.preventDefault();
 
         // Ignition Protocol
         if (!isPlaying) {
             document.getElementById('gameOverModal').classList.remove('active');
-            // Assuming startGame is accessible globally or we simulate a click on actionBtn
-            document.getElementById('actionBtn').click();
+            startGame();
             return;
         }
 
         // Jump Action
-        // We simulate the keydown event logic here by dispatching an event
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'Space' }));
+        if (!player.isJumping) {
+            player.dy = player.jumpForce;
+            player.isJumping = true;
+            player.isDucking = false;
+        }
     }, { passive: false });
 
     // ------------------------------------------
@@ -942,7 +944,11 @@ if (btnJump && btnDuck) {
         e.preventDefault();
         if (!isPlaying) return;
 
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowDown' }));
+        if (!player.isJumping) {
+            player.isDucking = true;
+            player.height = 30;
+            player.y = floorY - player.height;
+        }
     }, { passive: false });
 
     // ------------------------------------------
@@ -951,6 +957,10 @@ if (btnJump && btnDuck) {
     btnDuck.addEventListener('touchend', (e) => {
         e.preventDefault();
 
-        document.dispatchEvent(new KeyboardEvent('keyup', { 'code': 'ArrowDown' }));
+        if (player.isDucking) {
+            player.isDucking = false;
+            player.height = 60;
+            player.y = floorY - player.height;
+        }
     }, { passive: false });
 }
