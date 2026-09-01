@@ -906,3 +906,81 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 });
+
+// ==================================================
+// MOBILE TOUCH MATRIX (INVISIBLE SPLIT-SCREEN)
+// ==================================================
+
+document.addEventListener('touchstart', (e) => {
+
+    // Permit standard interactions for your UI buttons and Hub link
+    if (
+        e.target.id === 'actionBtn' ||
+        e.target.id === 'modalDismissBtn' ||
+        e.target.closest('a')
+    ) {
+        return;
+    }
+
+    // OVERRIDE: Prevent mobile browser scrolling and zooming
+    e.preventDefault();
+
+    // Ignition Protocol via Touch
+    if (!isPlaying) {
+        document
+            .getElementById('gameOverModal')
+            .classList
+            .remove('active');
+
+        startGame();
+        return;
+    }
+
+    // Calculate Touch Coordinate
+    const touchX = e.touches[0].clientX;
+    const screenWidth = window.innerWidth;
+
+    if (touchX > screenWidth / 2) {
+
+        // ==========================================
+        // RIGHT HALF: JUMP
+        // ==========================================
+        if (!player.isJumping) {
+            player.dy = player.jumpForce;
+            player.isJumping = true;
+            player.isDucking = false;
+        }
+
+    } else {
+
+        // ==========================================
+        // LEFT HALF: DUCK / SLIDE
+        // ==========================================
+        if (!player.isJumping) {
+            player.isDucking = true;
+            player.height = 30;
+            player.y = floorY - player.height;
+        }
+    }
+}, { passive: false });
+
+
+document.addEventListener('touchend', (e) => {
+
+    if (
+        e.target.id === 'actionBtn' ||
+        e.target.id === 'modalDismissBtn' ||
+        e.target.closest('a')
+    ) {
+        return;
+    }
+
+    e.preventDefault();
+
+    // Release the slide mechanic when the left thumb lifts
+    if (player.isDucking) {
+        player.isDucking = false;
+        player.height = 60;
+        player.y = floorY - player.height;
+    }
+}, { passive: false });
