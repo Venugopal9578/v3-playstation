@@ -15,13 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let highScore =
         Number(localStorage.getItem('salaarHighScore')) || 0;
 
+
     // ==================================================
     // HUMANLY POSSIBLE SPEED
     // ==================================================
 
     const MAX_GAME_SPEED = 5.0;
-    const SPEED_INTERVAL = 200;
-    const SPEED_INCREASE = 0.05;
+    const SPEED_INTERVAL = 150;
+    const SPEED_INCREASE = 0.025;
+
 
     let isPlaying = false;
     let animationId;
@@ -30,10 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameSpeed = 3.5;
     let obstacles = [];
 
+
     // STRICT GAP ENFORCEMENT
     let framesUntilNextObstacle = 100;
 
-    // Load Player Assets Only
+
+    // ==================================================
+    // LOAD PLAYER ASSETS
+    // ==================================================
+
     const assets = {
         run1: new Image(),
         run2: new Image(),
@@ -46,9 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
     assets.jump.src = 'img/jump.png';
     assets.duck.src = 'img/duck.png';
 
+
     const floorY = 220;
 
-    // Player Physics Matrix
+
+    // ==================================================
+    // PLAYER PHYSICS MATRIX
+    // ==================================================
+
     const player = {
         x: 50,
         y: 0,
@@ -63,12 +75,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     player.y = floorY - player.height;
 
+
+    // ==================================================
     // MICRO-CALIBRATION MATRIX
+    // ==================================================
+
     const spriteConfigs = {
-        run1: { width: 65, height: 130, nudgeY: 28, nudgeX: -17 },
-        run2: { width: 65, height: 130, nudgeY: 28, nudgeX: -17 },
-        jump: { width: 60, height: 85, nudgeY: 5, nudgeX: -15 },
-        duck: { width: 65, height: 100, nudgeY: 18, nudgeX: -17 }
+        run1: {
+            width: 65,
+            height: 130,
+            nudgeY: 28,
+            nudgeX: -17
+        },
+
+        run2: {
+            width: 65,
+            height: 130,
+            nudgeY: 28,
+            nudgeX: -17
+        },
+
+        jump: {
+            width: 60,
+            height: 85,
+            nudgeY: 5,
+            nudgeX: -15
+        },
+
+        duck: {
+            width: 65,
+            height: 100,
+            nudgeY: 18,
+            nudgeX: -17
+        }
     };
 
 
@@ -81,64 +120,99 @@ document.addEventListener('DOMContentLoaded', () => {
     // BOTH FACE LEFT
     // ==================================================
 
-    /*
-     * GROUND T-REX
-     */
+
+    // ==================================================
+    // GROUND T-REX
+    // ==================================================
 
     const groundDinoMatrix = [
         [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+
         [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
 
-    /*
-     * FLYING PTERODACTYL
-     */
+    // ==================================================
+    // FLYING PTERODACTYL
+    // ==================================================
 
     const flyDinoMatrix = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
         [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
         [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
@@ -149,17 +223,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
 
-        // OVERRIDE: Prevent the browser from scrolling
+        // Prevent browser scrolling with game keys
         if (
-            ['Space', 'ArrowUp', 'ArrowDown'].includes(e.code)
+            ['Space', 'ArrowUp', 'ArrowDown']
+                .includes(e.code)
         ) {
             e.preventDefault();
         }
 
+
+        // Start game with Space when inactive
         if (
             e.code === 'Space' &&
             !isPlaying
         ) {
+
             document
                 .getElementById('gameOverModal')
                 .classList
@@ -168,27 +246,51 @@ document.addEventListener('DOMContentLoaded', () => {
             startGame();
         }
 
+
         if (!isPlaying) return;
 
+
+        // Jump
         if (
-            (e.code === 'Space' || e.code === 'ArrowUp') &&
+            (e.code === 'Space' ||
+                e.code === 'ArrowUp') &&
             !player.isJumping
         ) {
-            player.dy = player.jumpForce;
-            player.isJumping = true;
-            player.isDucking = false;
+
+            player.dy =
+                player.jumpForce;
+
+            player.isJumping =
+                true;
+
+            player.isDucking =
+                false;
         }
 
+
+        // Slide
         if (
             e.code === 'ArrowDown' &&
             !player.isJumping
         ) {
-            player.isDucking = true;
-            player.height = 30;
-            player.y = floorY - player.height;
+
+            player.isDucking =
+                true;
+
+            player.height =
+                30;
+
+            player.y =
+                floorY -
+                player.height;
         }
+
     });
 
+
+    // ==================================================
+    // KEY RELEASE
+    // ==================================================
 
     document.addEventListener('keyup', (e) => {
 
@@ -196,10 +298,18 @@ document.addEventListener('DOMContentLoaded', () => {
             e.code === 'ArrowDown' &&
             player.isDucking
         ) {
-            player.isDucking = false;
-            player.height = 60;
-            player.y = floorY - player.height;
+
+            player.isDucking =
+                false;
+
+            player.height =
+                60;
+
+            player.y =
+                floorY -
+                player.height;
         }
+
     });
 
 
@@ -211,13 +321,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         constructor(type) {
 
-            this.x = canvas.width;
-            this.type = type;
+            this.x =
+                canvas.width;
+
+            this.type =
+                type;
+
 
             this.matrix =
                 type === 'ground'
                     ? groundDinoMatrix
                     : flyDinoMatrix;
+
 
             // ==================================================
             // SIZE CALIBRATION
@@ -228,28 +343,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? 1.45
                     : 1.25;
 
+
             this.width =
                 this.matrix[0].length *
                 this.pixelSize;
+
 
             this.height =
                 this.matrix.length *
                 this.pixelSize;
 
+
             // ==================================================
             // POSITION CALIBRATION
             // ==================================================
 
-            if (type === 'ground') {
+            if (
+                type === 'ground'
+            ) {
 
                 // Feet sit exactly on the floor
+
                 this.y =
                     floorY -
                     this.height;
 
             } else {
 
-                // Flying dino stays above human neck/head area
+                // Flying dino stays above
+                // human neck/head area
+
                 this.y =
                     floorY -
                     82;
@@ -260,9 +383,14 @@ document.addEventListener('DOMContentLoaded', () => {
         draw() {
 
             // Keep pixel edges sharp
-            ctx.imageSmoothingEnabled = false;
 
-            ctx.fillStyle = '#1f2d50';
+            ctx.imageSmoothingEnabled =
+                false;
+
+
+            ctx.fillStyle =
+                '#1f2d50';
+
 
             for (
                 let row = 0;
@@ -282,7 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         continue;
                     }
 
+
                     ctx.fillRect(
+
                         this.x +
                         col * this.pixelSize,
 
@@ -300,10 +430,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         update() {
 
-            this.x -= gameSpeed;
+            this.x -=
+                gameSpeed;
 
             this.draw();
-
         }
     }
 
@@ -314,18 +444,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function spawnObstacle() {
 
-        if (framesUntilNextObstacle <= 0) {
+        if (
+            framesUntilNextObstacle <= 0
+        ) {
 
             const type =
                 Math.random() > 0.70
                     ? 'fly'
                     : 'ground';
 
+
             obstacles.push(
                 new Obstacle(type)
             );
 
+
             // Random gap between 80 and 160 frames
+
             framesUntilNextObstacle =
                 Math.floor(
                     Math.random() * 80
@@ -334,7 +469,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
 
             framesUntilNextObstacle--;
-
         }
     }
 
@@ -349,22 +483,35 @@ document.addEventListener('DOMContentLoaded', () => {
         let config;
 
 
-        if (player.isJumping) {
+        if (
+            player.isJumping
+        ) {
 
-            activeImg = assets.jump;
-            config = spriteConfigs.jump;
+            activeImg =
+                assets.jump;
 
-        } else if (player.isDucking) {
+            config =
+                spriteConfigs.jump;
 
-            activeImg = assets.duck;
-            config = spriteConfigs.duck;
+        } else if (
+            player.isDucking
+        ) {
+
+            activeImg =
+                assets.duck;
+
+            config =
+                spriteConfigs.duck;
 
         } else {
 
             activeImg =
-                Math.floor(frameCount / 24) % 2 === 0
+                Math.floor(
+                    frameCount / 24
+                ) % 2 === 0
                     ? assets.run1
                     : assets.run2;
+
 
             config =
                 activeImg === assets.run1
@@ -382,11 +529,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         const collisionBottom =
-            player.y + player.height;
+            player.y +
+            player.height;
 
 
         const renderX =
-            player.x + config.nudgeX;
+            player.x +
+            config.nudgeX;
 
 
         const renderY =
@@ -418,13 +567,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const playerLeft =
             player.x + 8;
 
+
         const playerRight =
             player.x +
             player.width -
             8;
 
+
         const playerTop =
             player.y + 8;
+
 
         const playerBottom =
             player.y +
@@ -434,22 +586,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ------------------------------------------
         // GROUND DINO
-        //
-        // Keep your current collision behaviour.
         // ------------------------------------------
 
-        if (obs.type === 'ground') {
+        if (
+            obs.type === 'ground'
+        ) {
 
             const dinoLeft =
                 obs.x + 3;
+
+
+            /*
+             * Slightly shortened collision tail.
+             * Visual dinosaur remains unchanged.
+             */
 
             const dinoRight =
                 obs.x +
                 obs.width -
                 10;
 
+
             const dinoTop =
                 obs.y + 3;
+
 
             const dinoBottom =
                 obs.y +
@@ -457,13 +617,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             const hitX =
-                playerRight > dinoLeft &&
-                playerLeft < dinoRight;
+                playerRight >
+                dinoLeft &&
+                playerLeft <
+                dinoRight;
 
 
             const hitY =
-                playerBottom > dinoTop &&
-                playerTop < dinoBottom;
+                playerBottom >
+                dinoTop &&
+                playerTop <
+                dinoBottom;
 
 
             return hitX && hitY;
@@ -472,26 +636,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ------------------------------------------
         // FLYING DINO
-        //
-        // Artwork remains at floorY - 82.
-        //
-        // Collision area extends slightly downward
-        // so a standing player cannot simply walk
-        // through the flying dino.
         // ------------------------------------------
 
-        if (obs.type === 'fly') {
+        if (
+            obs.type === 'fly'
+        ) {
 
             const dinoLeft =
                 obs.x + 4;
+
 
             const dinoRight =
                 obs.x +
                 obs.width -
                 4;
 
+
             const dinoTop =
                 obs.y + 4;
+
+
+            /*
+             * Extended downward collision zone.
+             */
 
             const dinoBottom =
                 obs.y +
@@ -500,13 +667,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             const hitX =
-                playerRight > dinoLeft &&
-                playerLeft < dinoRight;
+                playerRight >
+                dinoLeft &&
+                playerLeft <
+                dinoRight;
 
 
             const hitY =
-                playerBottom > dinoTop &&
-                playerTop < dinoBottom;
+                playerBottom >
+                dinoTop &&
+                playerTop <
+                dinoBottom;
 
 
             return hitX && hitY;
@@ -538,7 +709,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // PHYSICS CALCULATION
         // ==========================================
 
-        player.y += player.dy;
+        player.y +=
+            player.dy;
 
 
         if (
@@ -549,18 +721,25 @@ document.addEventListener('DOMContentLoaded', () => {
             !player.isDucking
         ) {
 
-            player.dy += player.gravity;
-            player.isJumping = true;
+            player.dy +=
+                player.gravity;
 
-        } else if (!player.isDucking) {
+            player.isJumping =
+                true;
 
-            player.dy = 0;
+        } else if (
+            !player.isDucking
+        ) {
+
+            player.dy =
+                0;
 
             player.y =
                 floorY -
                 player.height;
 
-            player.isJumping = false;
+            player.isJumping =
+                false;
         }
 
 
@@ -583,7 +762,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             if (
-                detectCollision(obstacles[i])
+                detectCollision(
+                    obstacles[i]
+                )
             ) {
 
                 triggerGameOver();
@@ -603,7 +784,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ) {
 
             obstacles.shift();
-
         }
 
 
@@ -626,7 +806,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.strokeStyle =
             '#1f2d50';
 
-        ctx.lineWidth = 3;
+        ctx.lineWidth =
+            3;
 
         ctx.stroke();
 
@@ -643,6 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ) {
 
             score++;
+
 
             scoreDisplay.textContent =
                 String(score).padStart(
@@ -661,10 +843,12 @@ document.addEventListener('DOMContentLoaded', () => {
             score % SPEED_INTERVAL === 0
         ) {
 
-            gameSpeed = Math.min(
-                MAX_GAME_SPEED,
-                gameSpeed + SPEED_INCREASE
-            );
+            gameSpeed =
+                Math.min(
+                    MAX_GAME_SPEED,
+                    gameSpeed +
+                    SPEED_INCREASE
+                );
         }
 
 
@@ -681,13 +865,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function triggerGameOver() {
 
-        isPlaying = false;
+        isPlaying =
+            false;
+
 
         cancelAnimationFrame(
             animationId
         );
 
-        actionBtn.disabled = false;
+
+        actionBtn.disabled =
+            false;
+
 
         actionBtn.textContent =
             "RERUN SALAAR";
@@ -697,9 +886,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // HIGH SCORE UPDATE
         // ==========================================
 
-        if (score > highScore) {
+        if (
+            score > highScore
+        ) {
 
-            highScore = score;
+            highScore =
+                score;
+
 
             localStorage.setItem(
                 'salaarHighScore',
@@ -708,10 +901,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        if (highScoreDisplay) {
+        if (
+            highScoreDisplay
+        ) {
 
             highScoreDisplay.textContent =
-                String(highScore).padStart(
+                String(
+                    highScore
+                ).padStart(
                     5,
                     '0'
                 );
@@ -728,7 +925,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .getElementById(
                 'finalScoreDisplay'
             )
-            .textContent = score;
+            .textContent =
+            score;
 
 
         modal.classList.add(
@@ -743,31 +941,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startGame() {
 
-        if (isPlaying) return;
+        if (isPlaying)
+            return;
 
 
         obstacles = [];
 
+
         score = 0;
+
 
         frameCount = 0;
 
-        framesUntilNextObstacle = 100;
 
-        gameSpeed = 3.5;
+        framesUntilNextObstacle =
+            100;
 
 
-        player.isDucking = false;
+        gameSpeed =
+            3.5;
 
-        player.height = 60;
+
+        player.isDucking =
+            false;
+
+
+        player.height =
+            60;
+
 
         player.y =
             floorY -
             player.height;
 
-        player.dy = 0;
 
-        player.isJumping = false;
+        player.dy =
+            0;
+
+
+        player.isJumping =
+            false;
 
 
         // Current score resets.
@@ -777,23 +990,31 @@ document.addEventListener('DOMContentLoaded', () => {
             '00000';
 
 
-        if (highScoreDisplay) {
+        if (
+            highScoreDisplay
+        ) {
 
             highScoreDisplay.textContent =
-                String(highScore).padStart(
+                String(
+                    highScore
+                ).padStart(
                     5,
                     '0'
                 );
         }
 
 
-        actionBtn.disabled = true;
+        actionBtn.disabled =
+            true;
+
 
         actionBtn.textContent =
             "SALAAR IS ON HIS WAY";
 
 
-        isPlaying = true;
+        isPlaying =
+            true;
+
 
         gameLoop();
     }
@@ -804,7 +1025,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==================================================
 
     document
-        .getElementById('modalDismissBtn')
+        .getElementById(
+            'modalDismissBtn'
+        )
         .addEventListener(
             'click',
             () => {
@@ -814,7 +1037,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         'gameOverModal'
                     )
                     .classList
-                    .remove('active');
+                    .remove(
+                        'active'
+                    );
 
 
                 ctx.clearRect(
@@ -843,7 +1068,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.strokeStyle =
                     '#1f2d50';
 
-                ctx.lineWidth = 3;
+                ctx.lineWidth =
+                    3;
 
                 ctx.stroke();
 
@@ -855,10 +1081,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // INITIAL HIGH SCORE DISPLAY
     // ==================================================
 
-    if (highScoreDisplay) {
+    if (
+        highScoreDisplay
+    ) {
 
         highScoreDisplay.textContent =
-            String(highScore).padStart(
+            String(
+                highScore
+            ).padStart(
                 5,
                 '0'
             );
@@ -876,91 +1106,208 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==================================================
-    // INITIAL PLAYER LOAD
+    // MOBILE TOUCH CONTROLS
+    //
+    // IMPORTANT:
+    // These are INSIDE DOMContentLoaded scope
+    // and OUTSIDE the keyboard listener.
     // ==================================================
 
-    assets.run1.onload = () => {
-
-        drawPlayer();
-
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            0,
-            floorY
+    const btnDuck =
+        document.getElementById(
+            'btnDuck'
         );
 
-        ctx.lineTo(
-            canvas.width,
-            floorY
+
+    const btnJump =
+        document.getElementById(
+            'btnJump'
         );
 
-        ctx.strokeStyle =
-            '#1f2d50';
 
-        ctx.lineWidth = 3;
+    if (
+        btnJump &&
+        btnDuck
+    ) {
 
-        ctx.stroke();
+        // ==========================================
+        // JUMP BUTTON
+        // ==========================================
 
-    };
+        btnJump.addEventListener(
+            'pointerdown',
+            (e) => {
+
+                e.preventDefault();
+
+
+                // First tap starts the game
+                if (!isPlaying) {
+
+                    document
+                        .getElementById(
+                            'gameOverModal'
+                        )
+                        .classList
+                        .remove(
+                            'active'
+                        );
+
+
+                    startGame();
+
+                    return;
+                }
+
+
+                // Normal jump
+                if (
+                    !player.isJumping
+                ) {
+
+                    player.dy =
+                        player.jumpForce;
+
+
+                    player.isJumping =
+                        true;
+
+
+                    player.isDucking =
+                        false;
+                }
+            }
+        );
+
+
+        // ==========================================
+        // SLIDE BUTTON - PRESS
+        // ==========================================
+
+        btnDuck.addEventListener(
+            'pointerdown',
+            (e) => {
+
+                e.preventDefault();
+
+
+                // Keep receiving pointer events
+                // while finger remains pressed
+
+                try {
+                    btnDuck.setPointerCapture(
+                        e.pointerId
+                    );
+                } catch (error) {
+                    // Ignore pointer-capture errors
+                }
+
+
+                if (!isPlaying)
+                    return;
+
+
+                // Slide only from the ground
+
+                if (
+                    !player.isJumping
+                ) {
+
+                    player.isDucking =
+                        true;
+
+
+                    player.height =
+                        30;
+
+
+                    player.y =
+                        floorY -
+                        player.height;
+                }
+            }
+        );
+
+
+        // ==========================================
+        // SLIDE BUTTON - RELEASE
+        // ==========================================
+
+        const releaseSlide =
+            (e) => {
+
+                e.preventDefault();
+
+
+                try {
+
+                    if (
+                        btnDuck.hasPointerCapture(
+                            e.pointerId
+                        )
+                    ) {
+
+                        btnDuck.releasePointerCapture(
+                            e.pointerId
+                        );
+                    }
+
+                } catch (error) {
+                    // Ignore pointer-release errors
+                }
+
+
+                if (
+                    player.isDucking
+                ) {
+
+                    player.isDucking =
+                        false;
+
+
+                    player.height =
+                        60;
+
+
+                    player.y =
+                        floorY -
+                        player.height;
+                }
+            };
+
+
+        btnDuck.addEventListener(
+            'pointerup',
+            releaseSlide
+        );
+
+
+        btnDuck.addEventListener(
+            'pointercancel',
+            releaseSlide
+        );
+
+
+        /*
+         * Extra safety:
+         * If the browser reports the pointer
+         * leaving the button while pressed,
+         * release the slide state.
+         */
+
+        btnDuck.addEventListener(
+            'pointerleave',
+            (e) => {
+
+                if (
+                    e.buttons === 0 &&
+                    player.isDucking
+                ) {
+
+                    releaseSlide(e);
+                }
+            }
+        );
+    }
 
 });
-
-// ==================================================
-// VISIBLE GLOSSY TOUCH MATRIX (INSIDE ENGINE SCOPE)
-// ==================================================
-
-const btnDuck = document.getElementById('btnDuck');
-const btnJump = document.getElementById('btnJump');
-
-if (btnJump && btnDuck) {
-
-    // ------------------------------------------
-    // JUMP & IGNITION BUTTON
-    // ------------------------------------------
-    btnJump.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-
-        // Ignition Protocol
-        if (!isPlaying) {
-            document.getElementById('gameOverModal').classList.remove('active');
-            startGame();
-            return;
-        }
-
-        // Jump Action
-        if (!player.isJumping) {
-            player.dy = player.jumpForce;
-            player.isJumping = true;
-            player.isDucking = false;
-        }
-    }, { passive: false });
-
-    // ------------------------------------------
-    // DUCK / SLIDE BUTTON (HOLD)
-    // ------------------------------------------
-    btnDuck.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        if (!isPlaying) return;
-
-        if (!player.isJumping) {
-            player.isDucking = true;
-            player.height = 30;
-            player.y = floorY - player.height;
-        }
-    }, { passive: false });
-
-    // ------------------------------------------
-    // RELEASE SLIDE BUTTON
-    // ------------------------------------------
-    btnDuck.addEventListener('touchend', (e) => {
-        e.preventDefault();
-
-        if (player.isDucking) {
-            player.isDucking = false;
-            player.height = 60;
-            player.y = floorY - player.height;
-        }
-    }, { passive: false });
-}
