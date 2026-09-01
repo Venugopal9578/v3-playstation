@@ -908,79 +908,49 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==================================================
-// MOBILE TOUCH MATRIX (INVISIBLE SPLIT-SCREEN)
+// VISIBLE GLOSSY TOUCH MATRIX
 // ==================================================
 
-document.addEventListener('touchstart', (e) => {
+const btnDuck = document.getElementById('btnDuck');
+const btnJump = document.getElementById('btnJump');
 
-    // Permit standard interactions for your UI buttons and Hub link
-    if (
-        e.target.id === 'actionBtn' ||
-        e.target.id === 'modalDismissBtn' ||
-        e.target.closest('a')
-    ) {
-        return;
-    }
+if (btnJump && btnDuck) {
 
-    // OVERRIDE: Prevent mobile browser scrolling and zooming
-    e.preventDefault();
+    // ------------------------------------------
+    // JUMP & IGNITION BUTTON
+    // ------------------------------------------
+    btnJump.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Block screen movement
 
-    // Ignition Protocol via Touch
-    if (!isPlaying) {
-        document
-            .getElementById('gameOverModal')
-            .classList
-            .remove('active');
-
-        startGame();
-        return;
-    }
-
-    // Calculate Touch Coordinate
-    const touchX = e.touches[0].clientX;
-    const screenWidth = window.innerWidth;
-
-    if (touchX > screenWidth / 2) {
-
-        // ==========================================
-        // RIGHT HALF: JUMP
-        // ==========================================
-        if (!player.isJumping) {
-            player.dy = player.jumpForce;
-            player.isJumping = true;
-            player.isDucking = false;
+        // Ignition Protocol
+        if (!isPlaying) {
+            document.getElementById('gameOverModal').classList.remove('active');
+            // Assuming startGame is accessible globally or we simulate a click on actionBtn
+            document.getElementById('actionBtn').click();
+            return;
         }
 
-    } else {
+        // Jump Action
+        // We simulate the keydown event logic here by dispatching an event
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'Space' }));
+    }, { passive: false });
 
-        // ==========================================
-        // LEFT HALF: DUCK / SLIDE
-        // ==========================================
-        if (!player.isJumping) {
-            player.isDucking = true;
-            player.height = 30;
-            player.y = floorY - player.height;
-        }
-    }
-}, { passive: false });
+    // ------------------------------------------
+    // DUCK / SLIDE BUTTON (HOLD)
+    // ------------------------------------------
+    btnDuck.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (!isPlaying) return;
 
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowDown' }));
+    }, { passive: false });
 
-document.addEventListener('touchend', (e) => {
+    // ------------------------------------------
+    // RELEASE SLIDE BUTTON
+    // ------------------------------------------
+    btnDuck.addEventListener('touchend', (e) => {
+        e.preventDefault();
 
-    if (
-        e.target.id === 'actionBtn' ||
-        e.target.id === 'modalDismissBtn' ||
-        e.target.closest('a')
-    ) {
-        return;
-    }
-
-    e.preventDefault();
-
-    // Release the slide mechanic when the left thumb lifts
-    if (player.isDucking) {
-        player.isDucking = false;
-        player.height = 60;
-        player.y = floorY - player.height;
-    }
-}, { passive: false });
+        document.dispatchEvent(new KeyboardEvent('keyup', { 'code': 'ArrowDown' }));
+    }, { passive: false });
+}

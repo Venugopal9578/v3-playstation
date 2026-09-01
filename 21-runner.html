@@ -108,6 +108,55 @@
             color: #fff;
             border-color: #4a5a73;
         }
+
+        /* Mobile Touch Matrix - Glossy Glassmorphism */
+        /* Mobile Touch Matrix - True Glossy Glassmorphism */
+        .mobile-controls {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .glass-btn {
+            flex: 1;
+            /* Simulates the glossy surface with a diagonal light gradient */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Simulates light catching the top and left edges */
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #8ab4f8;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            padding: 15px 0;
+            border-radius: 12px;
+            /* Deep drop shadow + faint inner glow */
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.5), inset 0 2px 10px rgba(255, 255, 255, 0.05);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .glass-btn:active {
+            /* Brightens slightly and depresses on touch */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
+            transform: scale(0.96);
+            box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.6), inset 0 2px 15px rgba(255, 255, 255, 0.15);
+        }
+
+        @media (min-width: 768px) {
+            .mobile-controls {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -135,12 +184,18 @@
         </div>
 
         <div class="runner-hud">
-            HI <span id="highScore">00000</span>
+            HI <span id="highScore"> 00000</span>
             &nbsp;
             <span id="score">00000</span>
         </div>
 
         <canvas id="gameCanvas" width="700" height="250" class="runner-canvas"></canvas>
+
+        <!-- NEW: Glossy Touch Controls -->
+        <div class="mobile-controls">
+            <button id="btnDuck" class="glass-btn">SLIDE</button>
+            <button id="btnJump" class="glass-btn">JUMP</button>
+        </div>
 
         <button id="actionBtn" class="arcade-btn">TAP TO RUN SALAAR</button>
 
